@@ -27,11 +27,10 @@ SECRET_KEY = 'django-insecure--e-g@457pb&57%egx_8ii#=cq%o8cq^m1ijq3u4ynumn$(jymh
 DEBUG = False
 
 # Добавляем домен от Render
-ALLOWED_HOSTS = ['proverbs-app.onrender.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['proverbs-app.onrender.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
