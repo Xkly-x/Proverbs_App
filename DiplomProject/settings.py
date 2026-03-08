@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure--e-g@457pb&57%egx_8ii#=cq%o8cq^m1ijq3u4ynumn$(jymh'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # Добавляем домен от Render
 ALLOWED_HOSTS = ['proverbs-app.onrender.com', 'localhost', '127.0.0.1']
