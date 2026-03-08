@@ -1,0 +1,47 @@
+{% extends 'ProverbsApp/base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-0 bg-dark text-white overflow-hidden">
+                <div class="card-header bg-secondary text-center p-5 border-0">
+                    <div class="position-relative d-inline-block">
+                        {% if target_profile.avatar %}
+                            <img src="{{ target_profile.avatar.url }}" class="rounded-circle border border-4 border-warning shadow" style="width: 140px; height: 140px; object-fit: cover;">
+                        {% else %}
+                            <div class="rounded-circle border border-4 border-warning shadow bg-light d-flex align-items-center justify-content-center" style="width: 140px; height: 140px; font-size: 80px;">👤</div>
+                        {% endif %}
+                        <div class="position-absolute bottom-0 start-50 translate-middle-x badge rounded-pill bg-warning text-dark px-3 py-2 shadow-sm" style="margin-bottom: -15px;">
+                            {{ target_profile.rank }}
+                        </div>
+                    </div>
+                    <h2 class="mt-4 fw-bold">{{ target_profile.user.username }}</h2>
+                    <p class="text-light opacity-75">Участник сообщества</p>
+                </div>
+
+                <div class="card-body p-4 text-center">
+                    <div class="row mb-4">
+                        <div class="col-6 border-end">
+                            <h3 class="fw-bold text-warning">⭐ {{ target_profile.total_score }}</h3>
+                            <small class="text-uppercase opacity-50">Очков</small>
+                        </div>
+                        <div class="col-6">
+                            <h3 class="fw-bold text-danger">🔥 {{ target_profile.current_streak }}</h3>
+                            <small class="text-uppercase opacity-50">Стрик</small>
+                        </div>
+                    </div>
+                    
+                    <h5 class="text-start fw-bold mb-3">Достижения:</h5>
+                    <div class="d-flex flex-wrap gap-2 justify-content-start">
+                        {% for ach in target_profile.achievements.all %}
+                            <span class="badge bg-outline-secondary border p-2">{{ ach.icon }} {{ ach.name }}</span>
+                        {% empty %}
+                            <p class="text-muted small">У этого пользователя пока нет наград.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

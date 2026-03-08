@@ -1,0 +1,200 @@
+/* ==========================================
+   1. БАЗОВЫЕ СТИЛИ (СВЕТЛАЯ ТЕМА)
+   ========================================== */
+body {
+    background-color: #f8f9fa;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.sticky-top {
+    z-index: 1030;
+}
+
+.card {
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border: none;
+    margin-bottom: 20px;
+}
+
+.hero-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 3rem 0;
+    margin-bottom: 2rem;
+}
+.progress{
+height:10px;
+background:#222;
+border-radius:20px;
+margin-bottom:20px;
+}
+
+.progress-bar{
+height:10px;
+background:linear-gradient(90deg,#00c6ff,#0072ff);
+border-radius:20px;
+transition:0.5s;
+}
+/* ==========================================
+   2. ТЕМНАЯ ТЕМА (DARK MODE)
+   ========================================== */
+
+/* Глобальные настройки фона и текста */
+body.dark-mode {
+    background-color: #121212 !important;
+    color: #e0e0e0 !important;
+}
+
+/* Исправляем карточки, списки и блоки со значениями */
+body.dark-mode .card,
+body.dark-mode .card-body,
+body.dark-mode .list-group-item,
+body.dark-mode .collapse,
+body.dark-mode .bg-white,
+body.dark-mode .bg-light {
+    background-color: #1e1e1e !important;
+    color: #ffffff !important;
+    border-color: #333333 !important;
+}
+
+/* Исправляем заголовки и обычный текст */
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode p,
+body.dark-mode span,
+body.dark-mode li {
+    color: #ffffff !important;
+}
+
+body.dark-mode .text-muted,
+body.dark-mode .text-secondary,
+body.dark-mode small {
+    color: #bbbbbb !important;
+}
+
+body.dark-mode strong,
+body.dark-mode b {
+    color: #00d4ff !important; /* Бирюзовый акцент */
+}
+
+/* Ссылки */
+body.dark-mode a {
+    color: #8ab4f8 !important;
+}
+
+.form-text{
+    color: #a8a6a6;
+}
+/* ==========================================
+   3. КНОПКИ В ТЕМНОЙ ТЕМЕ (QUIZ И ГЛАВНАЯ)
+   ========================================== */
+
+/* Варианты ответов в викторине */
+body.dark-mode .btn-outline-primary,
+body.dark-mode .btn-outline-secondary {
+    color: #00d4ff !important;
+    border-color: #555555 !important;
+}
+
+body.dark-mode .btn-outline-primary:hover {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+/* Главная кнопка (Начать, Дальше) */
+body.dark-mode .btn-primary {
+    background-color: #bb86fc !important;
+    border-color: #bb86fc !important;
+    color: #000000 !important;
+    font-weight: bold;
+}
+
+/* Навигация и Футер */
+body.dark-mode .navbar {
+    background-color: #1e1e1e !important;
+    border-bottom: 1px solid #333;
+}
+
+body.dark-mode footer {
+    background-color: #121212 !important;
+    color: #888 !important;
+    border-top: 1px solid #333;
+}
+/* Исправляем алерт "Ничего не найдено" в темной теме */
+body.dark-mode .alert-warning {
+    background-color: #2c2411 !important; /* Темно-золотистый фон */
+    border-color: #664d03 !important;      /* Темная граница */
+    color: #ffda6a !important;             /* Яркий желтый текст */
+}
+
+body.dark-mode .alert-warning h4,
+body.dark-mode .alert-warning strong,
+body.dark-mode .alert-warning p {
+    color: #ffda6a !important;             /* Принудительно красим весь текст внутри */
+}
+
+body.dark-mode .alert-warning hr {
+    border-top-color: #664d03 !important;  /* Темная полоска разделителя */
+}
+/* ==========================================
+   4. АДАПТИВНОСТЬ (ДЛЯ ТЕЛЕФОНОВ)
+   ========================================== */
+@media (max-width: 768px) {
+    .container {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .card {
+        margin-bottom: 12px;
+    }
+
+    .card-body {
+        padding: 0.8rem !important;
+    }
+    .card-title, h5 {
+        font-size: 1rem !important;
+        margin-bottom: 0.5rem;
+    }
+
+    .card-text, .collapse {
+        font-size: 0.9rem !important;
+    }
+
+    .card .btn {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.85rem;
+        width: auto;
+    }
+
+    .quiz-container .btn {
+        padding: 0.6rem 1rem !important;
+        font-size: 0.95rem !important;
+    }
+}
+/*ВИЗУАЛ ПРОФИЛЬ*/
+    input[type="file"] {
+        color: transparent;
+        width: 120px;
+    }
+
+    .achievement-card {
+        transition: transform 0.2s;
+        cursor: help;
+    }
+
+    .achievement-card:hover {
+        transform: translateY(-5px);
+    }
+
+    body.dark-mode .achievement-card {
+        background-color: #2b2b2b !important;
+        border-color: #444 !important;
+        color: white;
+    }
+
+    body.dark-mode .card-header {
+        background-color: #1a1a1a !important;
+    }

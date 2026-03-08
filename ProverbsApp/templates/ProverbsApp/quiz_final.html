@@ -1,0 +1,16 @@
+{% extends 'ProverbsApp/base.html' %}
+
+{% block content %}
+<div class="container mt-5 text-center">
+    <div class="card shadow p-5">
+        <h1 class="display-3">🎉 Результат</h1>
+        <p class="lead">Вы прошли тест на знание пословиц!</p>
+        <div class="my-4">
+            <span class="display-1 fw-bold text-primary">{{ score }}</span>
+            <span class="h1 text-muted"> / {{ total }}</span>
+        </div>
+        <p>Правильных ответов</p>
+        <a href="{% url 'quiz' %}?reset=1" class="btn btn-outline-primary btn-lg">Попробовать еще раз</a>
+    </div>
+</div>
+{% endblock %}

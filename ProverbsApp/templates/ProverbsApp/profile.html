@@ -1,0 +1,96 @@
+{% extends 'ProverbsApp/base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-0 overflow-hidden">
+
+                <div class="card-header bg-dark text-white p-5 text-center border-0 position-relative">
+                    <div class="position-relative d-inline-block mb-3">
+                        {% if profile.avatar %}
+                            <img src="{{ profile.avatar.url }}" class="rounded-circle border" style="width: 140px; height: 140px; object-fit: cover;">
+                        {% else %}
+                            <span style="font-size: 80px;">👤</span>
+                        {% endif %}
+                        <div class="position-absolute bottom-0 start-50 translate-middle-x badge rounded-pill bg-warning text-dark px-3 py-2 shadow-sm"
+                             style="margin-bottom: -15px; white-space: nowrap; font-size: 0.9rem;">
+                            {{ profile.rank }}
+                        </div>
+                    </div>
+
+                    <h2 class="mt-3 fw-bold">{{ user.username }}</h2>
+
+                    <form method="post" enctype="multipart/form-data" class="mt-4">
+                        {% csrf_token %}
+                        <div class="d-flex justify-content-center align-items-center gap-2">
+                            <div style="display: none;">{{ form.avatar }}</div>
+                            <label for="id_avatar" class="btn btn-sm btn-outline-light rounded-pill px-3">
+                                📸 Изменить фото
+                            </label>
+                            <button type="submit" class="btn btn-sm btn-success rounded-circle p-2 shadow" title="Сохранить изменения">
+                                💾
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="card-body p-4">
+                    <div class="row text-center mb-5 mt-2">
+                        <div class="col-4 border-end">
+                            <h3 class="mb-0 fw-bold">🔥 {{ profile.current_streak }}</h3>
+                            <p class="text-muted small text-uppercase mb-0">Дней подряд</p>
+                        </div>
+                        <div class="col-4 border-end">
+                            <h3 class="mb-0 fw-bold text-primary">⭐ {{ profile.total_score }}</h3>
+                            <p class="text-muted small text-uppercase mb-0">Всего очков</p>
+                        </div>
+                        <div class="col-4">
+                            <h3 class="mb-0 fw-bold text-success">✅ {{ profile.completed_quizzes }}</h3>
+                            <p class="text-muted small text-uppercase mb-0">Викторин</p>
+                        </div>
+                    </div>
+
+                    <div class="achievement-section mb-4">
+                        <h5 class="fw-bold mb-3 d-flex align-items-center">
+                            <span class="me-2">🏆</span> Достижения
+                        </h5>
+                        <div class="d-flex flex-wrap gap-3">
+                            {% for achievement in profile.achievements.all %}
+                                <div class="achievement-card text-center p-2 border rounded-3 bg-light shadow-sm" style="width: 110px;">
+                                    <div class="fs-2">{{ achievement.icon }}</div>
+                                    <div class="small fw-bold text-truncate" title="{{ achievement.name }}">{{ achievement.name }}</div>
+                                </div>
+                            {% empty %}
+                                <div class="p-3 border rounded-3 w-100 text-center bg-light text-muted small italic">
+                                    Вы еще не заработали наград. Пройдите викторину!
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <a href="{% url 'quiz' %}" class="btn btn-primary btn-lg w-100 rounded-pill shadow-sm">
+                                📝 Начать викторину
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="{% url 'leaderboard' %}" class="btn btn-outline-warning text-dark btn-lg w-100 rounded-pill shadow-sm">
+                                🏆 Рейтинг игроков
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.querySelector('input[type="file"]').onchange = function() {
+        this.closest('form').submit();
+    };
+</script>
+{% endblock %}

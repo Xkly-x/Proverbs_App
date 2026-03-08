@@ -1,0 +1,44 @@
+{% extends 'ProverbsApp/base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <div class="progress">
+                <div class="progress-bar"
+                    style="width: {{ progress_percent }}%">
+                </div>
+            </div>
+            <div class="card p-4 shadow-sm">
+                <h2 class="text-center mb-4 italic">«{{ question }}»</h2>
+                <p class="text-center text-muted mb-4">Выберите правильное значение:</p>
+                <form action="{% url 'quiz_answer' %}" method="post">
+                    {% csrf_token %}
+                    <div class="d-grid gap-3">
+                        {% for option in options %}
+                            <button type="submit" name="is_correct" value="{{ option.is_correct|lower }}"
+                                    class="btn btn-outline-primary btn-lg text-start px-4 py-3 shadow-sm">
+                                {{ option.meaning }}
+                            </button>
+                        {% endfor %}
+                    </div>
+                </form>
+                <div class="text-center mt-4">
+                    <span class="badge bg-secondary">Вопрос {{ step_number }} из {{ total_steps }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    h2.italic {
+        font-style: italic;
+        color: #2c3e50;
+    }
+    body.dark-mode h2.italic {
+        color: #ffffff;
+    }
+</style>
+
+{% endblock %}

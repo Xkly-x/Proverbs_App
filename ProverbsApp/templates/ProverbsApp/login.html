@@ -1,0 +1,27 @@
+{% extends 'ProverbsApp/base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <h2 class="text-center mb-4">Вход в систему</h2>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            {{ form.as_p }}
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Войти</button>
+                    </form>
+                    <hr>
+                    <p class="text-center mb-0">Нет аккаунта? <a href="{% url 'register' %}">Зарегистрироваться</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    input { display: block; width: 100%; padding: .375rem .75rem; margin-bottom: 10px; border: 1px solid #ced4da; border-radius: .375rem; }
+    body.dark-mode input { background-color: #2b2b2b; color: white; border-color: #444; }
+</style>
+{% endblock %}
