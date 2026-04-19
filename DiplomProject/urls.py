@@ -29,6 +29,7 @@ def create_admin(request):
     return HttpResponse('Админ уже существует')
 
 urlpatterns = [
+    path('create-admin/', create_admin),
     path('admin/', admin.site.urls),
     path('accounts/login/', auth_views.LoginView.as_view(template_name='ProverbsApp/login.html'), name='login'),
     path('accounts/', include('django.contrib.auth.urls')),
