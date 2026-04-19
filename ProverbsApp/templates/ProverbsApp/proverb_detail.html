@@ -1,0 +1,62 @@
+{% extends 'ProverbsApp/base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+            <h2 class="fw-bold mb-3">«{{ proverb.text }}»</h2>
+            <p class="lead">{{ proverb.meaning }}</p>
+            <div class="mb-3">
+                {% for cat in proverb.categories.all %}
+                    <span class="badge bg-secondary">{{ cat.name }}</span>
+                {% endfor %}
+            </div>
+            <div class="d-flex align-items-center gap-2 flex-wrap">
+                <button class="like-btn {% if user in proverb.likes.all %}active{% endif %}"
+                        data-id="{{ proverb.id }}">
+                    <span class="like-icon">
+                        {% if user in proverb.likes.all %}
+                            ❤️
+                        {% else %}
+                            🤍
+                        {% endif %}
+                    </span>
+                    <span id="likes-count-{{ proverb.id }}">
+                        {{ proverb.likes.count }}
+                    </span>
+                </button>
+                {% if proverb.author %}
+                    <span class="text-muted">Автор: {{ proverb.author.username }}</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+            <h4 class="mb-3">Комментарии</h4>
+
+            {% if user.is_authenticated %}
+                <form method="post" action="{% url 'add_comment' proverb.id %}" class="mb-4">
+                    {% csrf_token %}
+                    {{ comment_form.as_p }}
+                    <button type="submit" class="btn btn-primary">Отправить</button>
+                </form>
+            {% else %}
+                <p class="text-muted">Чтобы оставить комментарий, войдите в аккаунт.</p>
+            {% endif %}
+
+            {% for comment in comments %}
+                <div class="border rounded p-3 mb-3">
+                    <div class="d-flex justify-content-between">
+                        <strong>{{ comment.user.username }}</strong>
+                        <small class="text-muted">{{ comment.created_at|date:"d.m.Y H:i" }}</small>
+                    </div>
+                    <p class="mb-0 mt-2">{{ comment.text }}</p>
+                </div>
+            {% empty %}
+                <p class="text-muted">Комментариев пока нет.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'ProverbsApp/base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="card shadow-sm border-0 mx-auto" style="max-width: 800px;">
+        <div class="card-body">
+            <h2 class="mb-4">Предложить новую пословицу</h2>
+            <p class="text-muted">После отправки пословица попадёт на модерацию администратора.</p>
+
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-success">Отправить на модерацию</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

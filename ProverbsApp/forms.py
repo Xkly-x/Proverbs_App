@@ -1,14 +1,29 @@
 from django import forms
-from .models import Profile
+from .models import Profile, Proverb, Comment
 
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['avatar']
+
+class ProverbSubmitForm(forms.ModelForm):
+    class Meta:
+        model = Proverb
+        fields = ['text', 'meaning', 'categories', 'difficulty']
         widgets = {
-            'avatar': forms.FileInput(attrs={'id': 'id_avatar'})
+            'categories': forms.CheckboxSelectMultiple(),
+            'text': forms.Textarea(attrs={'rows': 3, 'class': 'form-control'}),
+            'meaning': forms.Textarea(attrs={'rows': 4, 'class': 'form-control'}),
         }
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['avatar'].required = False # Чтобы можно было сохранять другие данные без смены фото
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['text']
+        widgets = {
+            'text': forms.Textarea(attrs={
+                'rows': 3,
+                'class': 'form-control',
+                'placeholder': 'Напишите комментарий...'
+            })
+        }

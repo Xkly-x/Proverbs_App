@@ -3,65 +3,46 @@
 
 {% block content %}
 <div class="container mt-4">
-
     <div class="row justify-content-center mb-4">
-        <div class="col-md-8 col-lg-6">
-            <form action="{% url 'index' %}" method="get" class="input-group">
-                <input type="text" name="q" class="form-control border-secondary"
-                       placeholder="Поиск пословиц..." value="{{ query|default:'' }}">
+        <div class="col-md-10 col-lg-8">
+            <form id="searchForm" action="{% url 'index' %}" method="get" class="input-group shadow-sm search-box">
+                <input type="hidden" name="tab" value="{{ active_tab|default:'main' }}">
+
+                <select id="categorySelect" name="category" class="form-select border-0">
+                    <option value="">Все темы</option>
+                    {% for cat in categories %}
+                        <option value="{{ cat.id }}" {% if selected_category == cat.id|stringformat:"i" %}selected{% endif %}>
+                            {{ cat.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+
+                <input type="text" id="liveSearchInput" name="q" class="form-control border-0"
+                       placeholder="Поиск пословиц..."
+                       value="{{ query|default:'' }}">
+
                 <button class="btn btn-primary px-4" type="submit">🔍</button>
             </form>
         </div>
     </div>
 
-    {% if query %}
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="h4">Результаты: <span class="text-info">«{{ query }}»</span></h2>
-            <a href="{% url 'index' %}" class="btn btn-outline-secondary btn-sm">Сбросить</a>
-        </div>
-    {% else %}
-        <div class="hero-section text-center rounded-3 mb-5 shadow-sm">
-            <h1 class="display-4 fw-bold">Мир Пословиц</h1>
-            <p class="lead">Мудрость, проверенная веками.</p>
-        </div>
+    <!-- ВКЛАДКИ -->
+    <div class="d-flex flex-wrap gap-2 mb-4 justify-content-center">
+        <a href="{% url 'index' %}?tab=main" class="btn {% if active_tab == 'main' %}btn-primary{% else %}btn-outline-primary{% endif %}">Основные</a>
+        <a href="{% url 'index' %}?tab=users" class="btn {% if active_tab == 'users' %}btn-primary{% else %}btn-outline-primary{% endif %}">От пользователей</a>
+        <a href="{% url 'index' %}?tab=liked" class="btn {% if active_tab == 'liked' %}btn-primary{% else %}btn-outline-primary{% endif %}">Мои лайки</a>
+        <a href="{% url 'index' %}?tab=day" class="btn {% if active_tab == 'day' %}btn-primary{% else %}btn-outline-primary{% endif %}">Пословица дня</a>
+        <a href="{% url 'index' %}?tab=popular" class="btn {% if active_tab == 'popular' %}btn-primary{% else %}btn-outline-primary{% endif %}">Популярные</a>
+    </div>
+
+    {% if user.is_authenticated %}
+    <div class="text-center mb-4">
+        <a href="{% url 'submit_proverb' %}" class="btn btn-success">➕ Предложить пословицу</a>
+    </div>
     {% endif %}
 
-    <div class="row">
-        {% if proverbs %}
-            {% for proverb in proverbs %}
-                <div class="col-md-6 col-lg-4 mb-4">
-                    <div class="card h-100 proverb-card">
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title fw-bold">«{{ proverb.text }}»</h5>
-                            {% if proverb.category %}
-                                <p class="small text-muted mb-2">📂 {{ proverb.category.name }}</p>
-                            {% endif %}
-                            <div class="mt-auto">
-                                <button class="btn btn-outline-primary btn-sm mt-2 w-100"
-                                        type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapse{{ proverb.id }}">
-                                    Показать значение
-                                </button>
-                                <div class="collapse mt-3" id="collapse{{ proverb.id }}">
-                                    <div class="p-3 bg-light rounded text-dark border">
-                                        <strong>Значение:</strong> {{ proverb.meaning }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        {% else %}
-            <div class="col-12 text-center py-5">
-                <div class="alert alert-warning d-inline-block px-5 shadow-sm">
-                    <h4 class="alert-heading fw-bold">Упс! Ничего не нашлось</h4>
-                    <p class="mb-2">По запросу <strong>"{{ query }}"</strong> пословиц нет.</p>
-                    <hr>
-                    <p class="mb-0 opacity-75 small">Попробуйте поискать другое: <em>труд, слово, время</em>.</p>
-                </div>
-            </div>
-        {% endif %}
+    <div class="row" id="proverbsContainer">
+        {% include 'ProverbsApp/partials/proverbs_list.html' %}
     </div>
 </div>
 {% endblock %}

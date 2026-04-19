@@ -4,7 +4,6 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card shadow-lg border-0 overflow-hidden">
-
                 <div class="card-header bg-dark text-white p-5 text-center border-0 position-relative">
                     <div class="position-relative d-inline-block mb-3">
                         {% if profile.avatar %}
@@ -17,9 +16,7 @@
                             {{ profile.rank }}
                         </div>
                     </div>
-
                     <h2 class="mt-3 fw-bold">{{ user.username }}</h2>
-
                     <form method="post" enctype="multipart/form-data" class="mt-4">
                         {% csrf_token %}
                         <div class="d-flex justify-content-center align-items-center gap-2">
@@ -56,9 +53,11 @@
                         </h5>
                         <div class="d-flex flex-wrap gap-3">
                             {% for achievement in profile.achievements.all %}
-                                <div class="achievement-card text-center p-2 border rounded-3 bg-light shadow-sm" style="width: 110px;">
-                                    <div class="fs-2">{{ achievement.icon }}</div>
-                                    <div class="small fw-bold text-truncate" title="{{ achievement.name }}">{{ achievement.name }}</div>
+                                <div class="achievement-card"
+                                    data-bs-toggle="tooltip"
+                                    data-bs-placement="top"
+                                    title="{{ achievement.description }}">
+                                    {{ achievement.icon }}
                                 </div>
                             {% empty %}
                                 <div class="p-3 border rounded-3 w-100 text-center bg-light text-muted small italic">
@@ -88,9 +87,73 @@
     </div>
 </div>
 
+<hr class="my-5">
+
+<div class="container">
+    <div class="mt-4">
+        <h4 class="fw-bold mb-3">📚 Мои пословицы</h4>
+
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card border-success shadow-sm status-card">
+                    <div class="card-header bg-success text-white">✅ Одобрено</div>
+                    <div class="card-body">
+                        {% for p in approved_proverbs %}
+                            <div class="mb-3 proverb-status-item">
+                                <strong>«{{ p.text }}»</strong>
+                                <p class="small text-muted mb-1">{{ p.meaning|truncatechars:80 }}</p>
+                                <small class="text-muted">{{ p.created_at|date:"d.m.Y H:i" }}</small>
+                            </div>
+                        {% empty %}
+                            <p class="text-muted small mb-0">Нет одобренных пословиц</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card border-warning shadow-sm status-card">
+                    <div class="card-header bg-warning text-dark">🕒 На модерации</div>
+                    <div class="card-body">
+                        {% for p in pending_proverbs %}
+                            <div class="mb-3 proverb-status-item">
+                                <strong>«{{ p.text }}»</strong>
+                                <p class="small text-muted mb-1">{{ p.meaning|truncatechars:80 }}</p>
+                                <small class="text-muted">{{ p.created_at|date:"d.m.Y H:i" }}</small>
+                            </div>
+                        {% empty %}
+                            <p class="text-muted small mb-0">Нет пословиц на проверке</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card border-danger shadow-sm status-card">
+                    <div class="card-header bg-danger text-white">❌ Отклонено</div>
+                    <div class="card-body">
+                        {% for p in rejected_proverbs %}
+                            <div class="mb-3 proverb-status-item">
+                                <strong>«{{ p.text }}»</strong>
+                                <p class="small text-muted mb-1">{{ p.meaning|truncatechars:80 }}</p>
+                                <small class="text-muted">{{ p.created_at|date:"d.m.Y H:i" }}</small>
+                            </div>
+                        {% empty %}
+                            <p class="text-muted small mb-0">Нет отклонённых пословиц</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
-    document.querySelector('input[type="file"]').onchange = function() {
-        this.closest('form').submit();
-    };
+    const avatarInput = document.querySelector('input[type="file"]');
+    if (avatarInput) {
+        avatarInput.onchange = function() {
+            this.closest('form').submit();
+        };
+    }
 </script>
 {% endblock %}

@@ -27,8 +27,7 @@ SECRET_KEY = 'django-insecure--e-g@457pb&57%egx_8ii#=cq%o8cq^m1ijq3u4ynumn$(jymh
 DEBUG = True
 
 # Добавляем домен от Render
-ALLOWED_HOSTS = ['proverbs-app.onrender.com', 'localhost', '127.0.0.1']
-
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 # Application definition
 INSTALLED_APPS = [
@@ -102,7 +101,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 

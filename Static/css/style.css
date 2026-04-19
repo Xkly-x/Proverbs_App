@@ -1,200 +1,826 @@
-/* ==========================================
-   1. БАЗОВЫЕ СТИЛИ (СВЕТЛАЯ ТЕМА)
-   ========================================== */
+/* =========================
+   ROOT PALETTE
+========================= */
+:root {
+    /* Light theme (нижние 3 цвета) */
+    --bg-main: #eaf7ff;
+    --bg-gradient-1: #c1e8ff;
+    --bg-gradient-2: #7da0ca;
+    --bg-card: rgba(255, 255, 255, 0.72);
+    --bg-card-solid: #f7fcff;
+    --text-main: #0f172a;
+    --text-soft: #4b5d73;
+    --border-color: rgba(84, 131, 179, 0.18);
+    --accent: #5483b3;
+    --accent-2: #7da0ca;
+    --accent-3: #c1e8ff;
+    --shadow-soft: 0 10px 30px rgba(84, 131, 179, 0.18);
+    --shadow-hover: 0 16px 36px rgba(84, 131, 179, 0.25);
+    --hero-gradient: linear-gradient(135deg, #5483b3 0%, #7da0ca 50%, #c1e8ff 100%);
+    --button-gradient: linear-gradient(135deg, #5483b3 0%, #7da0ca 100%);
+    --back-card-gradient: linear-gradient(135deg, #5483b3 0%, #7da0ca 45%, #c1e8ff 100%);
+    --progress-gradient: linear-gradient(90deg, #5483b3 0%, #7da0ca 100%);
+    --glass-blur: blur(16px);
+}
+
+/* =========================
+   GLOBAL HTML / BODY
+   FIX WHITE FLASH
+========================= */
+html,
 body {
-    background-color: #f8f9fa;
-    transition: background-color 0.3s, color 0.3s;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(180deg, var(--bg-gradient-1) 0%, #dff1ff 35%, #edf8ff 100%);
+    color: var(--text-main);
+    font-family: 'Segoe UI', 'Inter', sans-serif;
+    transition: background .35s ease, color .35s ease;
 }
 
-.sticky-top {
-    z-index: 1030;
+/* ВАЖНО: чтобы не было белой вспышки */
+html {
+    background-color: #eaf7ff;
 }
 
+body {
+    background-attachment: fixed;
+}
+
+/* Тёмная тема — верхние 3 цвета */
+html.dark-mode,
+body.dark-mode,
+html.dark-mode body {
+    background: linear-gradient(180deg, #021024 0%, #052659 45%, #0b1f44 100%) !important;
+    background-color: #021024 !important;
+    color: #eef6ff !important;
+}
+
+/* Глобально для контейнера */
+.container,
+.container-fluid {
+    transition: all .3s ease;
+}
+
+/* =========================
+   TYPOGRAPHY
+========================= */
+h1, h2, h3, h4, h5, h6,
+p, span, label, small, li, a {
+    transition: color .25s ease;
+}
+
+.result-title {
+    color: var(--text-main);
+    font-weight: 700;
+}
+
+.italic {
+    font-style: italic;
+}
+
+/* =========================
+   HERO SECTION
+========================= */
+.hero-section {
+    position: relative;
+    background: var(--hero-gradient);
+    color: #ffffff;
+    padding: 3rem 2rem;
+    border-radius: 28px;
+    box-shadow: 0 20px 50px rgba(84, 131, 179, 0.22);
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.28);
+}
+
+.hero-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at top right, rgba(255,255,255,.25), transparent 35%),
+        radial-gradient(circle at bottom left, rgba(255,255,255,.15), transparent 40%);
+    pointer-events: none;
+}
+
+.hero-section > * {
+    position: relative;
+    z-index: 2;
+}
+
+/* =========================
+   SEARCH BOX
+========================= */
+.search-box {
+    background: rgba(255, 255, 255, 0.58);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-radius: 22px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.35);
+    box-shadow: var(--shadow-soft);
+}
+
+.form-select,
+.form-control {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 12px 14px;
+    background: rgba(255,255,255,.75) !important;
+    color: var(--text-main) !important;
+    border-radius: 14px !important;
+}
+
+.form-control::placeholder {
+    color: #6f89a5 !important;
+}
+
+.form-select:focus,
+.form-control:focus {
+    box-shadow: 0 0 0 3px rgba(84, 131, 179, 0.16) !important;
+    background: rgba(255,255,255,.9) !important;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+.btn {
+    border-radius: 14px !important;
+    transition: all .22s ease !important;
+    font-weight: 600;
+}
+
+.btn-primary {
+    background: var(--button-gradient) !important;
+    border: none !important;
+    box-shadow: 0 8px 18px rgba(84, 131, 179, .24);
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+    box-shadow: 0 12px 24px rgba(84, 131, 179, .28);
+}
+
+.btn-outline-light,
+.reset-btn {
+    color: var(--accent) !important;
+    border: 2px solid rgba(84, 131, 179, .35) !important;
+    background: rgba(255,255,255,.55) !important;
+    backdrop-filter: blur(10px);
+}
+
+.btn-outline-light:hover,
+.reset-btn:hover {
+    background: var(--button-gradient) !important;
+    color: #fff !important;
+    border-color: transparent !important;
+    transform: translateY(-1px);
+}
+
+.btn-outline-primary {
+    background: rgba(255,255,255,.72) !important;
+    color: var(--accent) !important;
+    border: 2px solid rgba(84, 131, 179, .35) !important;
+    border-radius: 14px !important;
+}
+
+.btn-outline-primary:hover {
+    background: var(--button-gradient) !important;
+    color: #ffffff !important;
+    border-color: transparent !important;
+    transform: translateY(-1px);
+}
+
+/* =========================
+   CARDS GLOBAL
+========================= */
 .card {
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    border: none;
+    border: 1px solid rgba(84, 131, 179, .14);
+    border-radius: 24px;
+    background: var(--bg-card);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    color: var(--text-main);
+    box-shadow: var(--shadow-soft);
+    transition: transform .25s ease, box-shadow .25s ease, background .3s ease, border-color .3s ease, color .3s ease;
+}
+
+.card:hover {
+    box-shadow: var(--shadow-hover);
+}
+
+.card h2,
+.card h3,
+.card h4,
+.card h5,
+.card p,
+.card span,
+.card small,
+.card label {
+    color: inherit;
+}
+
+/* =========================
+   FLIP CARD
+========================= */
+.flip-card {
+    perspective: 1000px;
+    height: 250px;
+    cursor: pointer;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform .65s ease;
+    transform-style: preserve-3d;
+    border-radius: 22px;
+    box-shadow: var(--shadow-soft);
+}
+
+.flip-card.flipped .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+    position: absolute;
+    inset: 0;
+    padding: 22px;
+    border-radius: 22px;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+.flip-card-front {
+    background: rgba(255,255,255,.68);
+    border: 1px solid rgba(84, 131, 179, .16);
+    color: var(--text-main);
+}
+
+.flip-card-back {
+    background: var(--back-card-gradient);
+    color: #ffffff;
+    transform: rotateY(180deg);
+    border: 1px solid rgba(255,255,255,.25);
+}
+
+.flip-card-front h5,
+.flip-card-front p {
+    color: var(--text-main);
+}
+
+.flip-card-back h5,
+.flip-card-back p,
+.flip-card-back small {
+    color: #ffffff !important;
+}
+
+.proverb-badge {
+    background: rgba(255, 215, 0, .92) !important;
+    color: #111 !important;
+    margin: 2px;
+    border-radius: 10px !important;
+    font-weight: 700;
+}
+
+.hint-text {
+    color: var(--text-soft) !important;
+}
+
+/* =========================
+   EMPTY ALERT
+========================= */
+.empty-alert {
+    background: rgba(255,255,255,.7);
+    color: var(--text-main);
+    border-radius: 22px;
+    border: 1px solid rgba(84, 131, 179, .14);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: var(--shadow-soft);
+}
+
+/* =========================
+   QUIZ PAGE
+========================= */
+h2.italic {
+    font-style: italic;
+    color: #1e3a5f;
+    font-weight: 700;
+}
+
+.progress {
+    height: 14px;
+    border-radius: 999px;
+    background: rgba(84, 131, 179, .14);
+    overflow: hidden;
     margin-bottom: 20px;
 }
 
-.hero-section {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 3rem 0;
-    margin-bottom: 2rem;
-}
-.progress{
-height:10px;
-background:#222;
-border-radius:20px;
-margin-bottom:20px;
+.progress-bar {
+    background: var(--progress-gradient) !important;
+    border-radius: 999px;
 }
 
-.progress-bar{
-height:10px;
-background:linear-gradient(90deg,#00c6ff,#0072ff);
-border-radius:20px;
-transition:0.5s;
-}
-/* ==========================================
-   2. ТЕМНАЯ ТЕМА (DARK MODE)
-   ========================================== */
-
-/* Глобальные настройки фона и текста */
-body.dark-mode {
-    background-color: #121212 !important;
-    color: #e0e0e0 !important;
+/* =========================
+   PROFILE PAGE
+========================= */
+.card.shadow-lg {
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(84, 131, 179, .18) !important;
 }
 
-/* Исправляем карточки, списки и блоки со значениями */
-body.dark-mode .card,
-body.dark-mode .card-body,
-body.dark-mode .list-group-item,
-body.dark-mode .collapse,
-body.dark-mode .bg-white,
-body.dark-mode .bg-light {
-    background-color: #1e1e1e !important;
+.card-header {
+    border: none !important;
+}
+
+.card-header.bg-dark {
+    background: linear-gradient(135deg, #5483b3 0%, #7da0ca 55%, #c1e8ff 100%) !important;
     color: #ffffff !important;
-    border-color: #333333 !important;
 }
 
-/* Исправляем заголовки и обычный текст */
+.card-header .rounded-circle.border {
+    border: 3px solid rgba(255,255,255,.8) !important;
+    box-shadow: 0 10px 22px rgba(0,0,0,.15);
+}
+
+.card-header .badge.bg-warning {
+    color: #111 !important;
+    border-radius: 10px;
+}
+
+.card-body {
+    background: transparent;
+    color: var(--text-main);
+}
+
+.border-end {
+    border-color: rgba(84, 131, 179, .18) !important;
+}
+
+/* =========================
+   ACHIEVEMENTS
+========================= */
+.achievement-card {
+    width: 72px;
+    height: 72px;
+    border-radius: 18px;
+    background: rgba(255,255,255,.62);
+    border: 1px solid rgba(84, 131, 179, .16);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: .25s ease;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.achievement-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(84, 131, 179, .18);
+}
+
+.bg-light {
+    background: rgba(255,255,255,.58) !important;
+}
+
+/* =========================
+   PROVERB CARDS / LIKE / COMMENTS
+========================= */
+.proverb-card {
+    border-radius: 22px;
+    transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+    background: rgba(255,255,255,.68);
+    border: 1px solid rgba(84, 131, 179, .14);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+.proverb-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 34px rgba(84, 131, 179, .2) !important;
+}
+
+.details-btn {
+    border-radius: 12px !important;
+}
+
+.like-btn {
+    border-radius: 12px !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all .2s ease;
+}
+
+.like-btn:hover {
+    transform: translateY(-1px);
+}
+
+.like-btn.active {
+    background: rgba(220, 53, 69, 0.1) !important;
+    border-color: #dc3545 !important;
+    color: #dc3545 !important;
+}
+
+.comment-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 31px;
+    padding: 6px 10px;
+    border-radius: 12px;
+    background: rgba(255,255,255,.65);
+    border: 1px solid rgba(84, 131, 179, .14);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #36557a;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* =========================
+   COMMENT ITEMS
+========================= */
+.comment-item {
+    border-radius: 16px !important;
+    background: rgba(255,255,255,.62);
+    border: 1px solid rgba(84, 131, 179, .14);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* =========================
+   PROFILE STATUS BLOCKS
+========================= */
+.status-card {
+    border-radius: 22px;
+    overflow: hidden;
+}
+
+.proverb-status-item {
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid rgba(84, 131, 179, .12);
+}
+
+.proverb-status-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+/* =========================
+   ALERTS / STATUS COLORS
+========================= */
+.alert-light {
+    background: rgba(255,255,255,.68) !important;
+    border: 1px solid rgba(84, 131, 179, .14) !important;
+    color: var(--text-main) !important;
+    border-radius: 18px !important;
+}
+
+.card.border-success {
+    border-color: rgba(25, 135, 84, .35) !important;
+}
+
+.card.border-warning {
+    border-color: rgba(255, 193, 7, .4) !important;
+}
+
+.card.border-danger {
+    border-color: rgba(220, 53, 69, .35) !important;
+}
+
+/* =========================
+   DARK MODE
+   Верхние 3 цвета
+========================= */
+body.dark-mode {
+    color: #eef6ff;
+}
+
+/* Общий текст */
+body.dark-mode .result-title,
 body.dark-mode h1,
 body.dark-mode h2,
 body.dark-mode h3,
 body.dark-mode h4,
 body.dark-mode h5,
+body.dark-mode h6,
 body.dark-mode p,
 body.dark-mode span,
-body.dark-mode li {
-    color: #ffffff !important;
-}
-
-body.dark-mode .text-muted,
-body.dark-mode .text-secondary,
-body.dark-mode small {
-    color: #bbbbbb !important;
-}
-
-body.dark-mode strong,
-body.dark-mode b {
-    color: #00d4ff !important; /* Бирюзовый акцент */
-}
-
-/* Ссылки */
+body.dark-mode label,
+body.dark-mode small,
+body.dark-mode li,
 body.dark-mode a {
-    color: #8ab4f8 !important;
+    color: #eef6ff;
 }
 
-.form-text{
-    color: #a8a6a6;
+/* Hero */
+body.dark-mode .hero-section {
+    background: linear-gradient(135deg, #021024 0%, #052659 55%, #5483b3 100%);
+    color: #ffffff;
+    border: 1px solid rgba(193, 232, 255, .08);
+    box-shadow: 0 24px 55px rgba(2, 16, 36, .55);
 }
-/* ==========================================
-   3. КНОПКИ В ТЕМНОЙ ТЕМЕ (QUIZ И ГЛАВНАЯ)
-   ========================================== */
 
-/* Варианты ответов в викторине */
-body.dark-mode .btn-outline-primary,
-body.dark-mode .btn-outline-secondary {
-    color: #00d4ff !important;
-    border-color: #555555 !important;
+/* Search */
+body.dark-mode .search-box {
+    background: rgba(5, 38, 89, .42);
+    border: 1px solid rgba(193, 232, 255, .08);
+    box-shadow: 0 14px 34px rgba(2, 16, 36, .35);
+}
+
+body.dark-mode .form-select,
+body.dark-mode .form-control {
+    background: rgba(2, 16, 36, .48) !important;
+    color: #eef6ff !important;
+    border: 1px solid rgba(193, 232, 255, .06) !important;
+}
+
+body.dark-mode .form-select option {
+    background: #052659;
+    color: #eef6ff;
+}
+
+body.dark-mode .form-control::placeholder {
+    color: #9bb9d9 !important;
+}
+
+body.dark-mode .form-select:focus,
+body.dark-mode .form-control:focus {
+    box-shadow: 0 0 0 3px rgba(84, 131, 179, .18) !important;
+}
+
+/* Buttons */
+body.dark-mode .btn-primary {
+    background: linear-gradient(135deg, #052659 0%, #5483b3 100%) !important;
+    box-shadow: 0 10px 24px rgba(2, 16, 36, .45);
+}
+
+body.dark-mode .btn-outline-light,
+body.dark-mode .reset-btn {
+    color: #c1e8ff !important;
+    border-color: rgba(193, 232, 255, .22) !important;
+    background: rgba(2, 16, 36, .28) !important;
+}
+
+body.dark-mode .btn-outline-light:hover,
+body.dark-mode .reset-btn:hover {
+    background: linear-gradient(135deg, #052659 0%, #5483b3 100%) !important;
+    color: #ffffff !important;
+    border-color: transparent !important;
+}
+
+body.dark-mode .btn-outline-primary {
+    background: rgba(2, 16, 36, .35) !important;
+    color: #c1e8ff !important;
+    border-color: rgba(193, 232, 255, .18) !important;
 }
 
 body.dark-mode .btn-outline-primary:hover {
-    background-color: #ffffff !important;
-    color: #000000 !important;
+    background: linear-gradient(135deg, #052659 0%, #5483b3 100%) !important;
+    color: #ffffff !important;
+    border-color: transparent !important;
 }
 
-/* Главная кнопка (Начать, Дальше) */
-body.dark-mode .btn-primary {
-    background-color: #bb86fc !important;
-    border-color: #bb86fc !important;
-    color: #000000 !important;
-    font-weight: bold;
+/* Cards */
+body.dark-mode .card,
+body.dark-mode .card-body {
+    background: rgba(5, 38, 89, .34) !important;
+    color: #eef6ff !important;
+    border-color: rgba(193, 232, 255, .08) !important;
+    box-shadow: 0 16px 34px rgba(2, 16, 36, .34) !important;
 }
 
-/* Навигация и Футер */
-body.dark-mode .navbar {
-    background-color: #1e1e1e !important;
-    border-bottom: 1px solid #333;
+body.dark-mode .card .text-muted,
+body.dark-mode .text-muted {
+    color: #9bb9d9 !important;
 }
 
-body.dark-mode footer {
-    background-color: #121212 !important;
-    color: #888 !important;
-    border-top: 1px solid #333;
-}
-/* Исправляем алерт "Ничего не найдено" в темной теме */
-body.dark-mode .alert-warning {
-    background-color: #2c2411 !important; /* Темно-золотистый фон */
-    border-color: #664d03 !important;      /* Темная граница */
-    color: #ffda6a !important;             /* Яркий желтый текст */
+/* Quiz title */
+body.dark-mode h2.italic {
+    color: #cdeaff !important;
 }
 
-body.dark-mode .alert-warning h4,
-body.dark-mode .alert-warning strong,
-body.dark-mode .alert-warning p {
-    color: #ffda6a !important;             /* Принудительно красим весь текст внутри */
+/* Progress */
+body.dark-mode .progress {
+    background: rgba(193, 232, 255, .08) !important;
 }
 
-body.dark-mode .alert-warning hr {
-    border-top-color: #664d03 !important;  /* Темная полоска разделителя */
+body.dark-mode .progress-bar {
+    background: linear-gradient(90deg, #052659 0%, #5483b3 100%) !important;
 }
-/* ==========================================
-   4. АДАПТИВНОСТЬ (ДЛЯ ТЕЛЕФОНОВ)
-   ========================================== */
-@media (max-width: 768px) {
-    .container {
-        padding-left: 10px;
-        padding-right: 10px;
-    }
-    .card {
-        margin-bottom: 12px;
-    }
 
-    .card-body {
-        padding: 0.8rem !important;
-    }
-    .card-title, h5 {
-        font-size: 1rem !important;
-        margin-bottom: 0.5rem;
-    }
-
-    .card-text, .collapse {
-        font-size: 0.9rem !important;
-    }
-
-    .card .btn {
-        padding: 0.25rem 0.5rem;
-        font-size: 0.85rem;
-        width: auto;
-    }
-
-    .quiz-container .btn {
-        padding: 0.6rem 1rem !important;
-        font-size: 0.95rem !important;
-    }
+/* Profile header */
+body.dark-mode .card-header.bg-dark {
+    background: linear-gradient(135deg, #021024 0%, #052659 60%, #5483b3 100%) !important;
+    color: #ffffff !important;
 }
-/*ВИЗУАЛ ПРОФИЛЬ*/
-    input[type="file"] {
-        color: transparent;
-        width: 120px;
-    }
 
-    .achievement-card {
-        transition: transform 0.2s;
-        cursor: help;
-    }
+/* Border end */
+body.dark-mode .border-end {
+    border-color: rgba(193, 232, 255, .08) !important;
+}
 
-    .achievement-card:hover {
-        transform: translateY(-5px);
-    }
+/* Achievement */
+body.dark-mode .achievement-card {
+    background: rgba(2, 16, 36, .36) !important;
+    border-color: rgba(193, 232, 255, .08) !important;
+}
 
-    body.dark-mode .achievement-card {
-        background-color: #2b2b2b !important;
-        border-color: #444 !important;
-        color: white;
-    }
+body.dark-mode .achievement-card:hover {
+    box-shadow: 0 12px 24px rgba(2, 16, 36, .45);
+}
 
-    body.dark-mode .card-header {
-        background-color: #1a1a1a !important;
-    }
+body.dark-mode .bg-light {
+    background: rgba(2, 16, 36, .28) !important;
+    color: #eef6ff !important;
+    border-color: rgba(193, 232, 255, .08) !important;
+}
+
+/* Flip card dark */
+body.dark-mode .flip-card-front {
+    background: rgba(5, 38, 89, .34) !important;
+    color: #eef6ff !important;
+    border-color: rgba(193, 232, 255, .08) !important;
+}
+
+body.dark-mode .flip-card-front h5,
+body.dark-mode .flip-card-front p,
+body.dark-mode .flip-card-front .text-muted,
+body.dark-mode .flip-card-front .hint-text {
+    color: #eef6ff !important;
+}
+
+body.dark-mode .flip-card-back {
+    background: linear-gradient(135deg, #021024 0%, #052659 55%, #5483b3 100%) !important;
+    color: #ffffff !important;
+}
+
+/* Empty alert */
+body.dark-mode .empty-alert {
+    background: rgba(5, 38, 89, .34) !important;
+    color: #eef6ff !important;
+    border-color: rgba(193, 232, 255, .08) !important;
+}
+
+/* Comment badge */
+body.dark-mode .comment-badge {
+    background: rgba(2, 16, 36, .32) !important;
+    border-color: rgba(193, 232, 255, .08) !important;
+    color: #d7ecff !important;
+}
+
+/* Details button */
+body.dark-mode .btn-outline-dark.details-btn {
+    color: #e8f4ff !important;
+    border-color: rgba(193, 232, 255, .18) !important;
+    background: rgba(2, 16, 36, .2) !important;
+}
+
+body.dark-mode .btn-outline-dark.details-btn:hover {
+    background: rgba(84, 131, 179, .2) !important;
+    color: #fff !important;
+    border-color: rgba(193, 232, 255, .24) !important;
+}
+
+/* Like button */
+body.dark-mode .like-btn {
+    background: rgba(2, 16, 36, .2) !important;
+}
+
+body.dark-mode .like-btn.active {
+    background: rgba(220, 53, 69, 0.18) !important;
+    color: #ff9dad !important;
+    border-color: #ff6f86 !important;
+}
+
+/* Comment item */
+body.dark-mode .comment-item {
+    background: rgba(5, 38, 89, .28) !important;
+    border-color: rgba(193, 232, 255, .08) !important;
+}
+
+/* Status list */
+body.dark-mode .proverb-status-item {
+    border-bottom-color: rgba(193, 232, 255, .08);
+}
+
+/* Alert light */
+body.dark-mode .alert-light {
+    background: rgba(5, 38, 89, .34) !important;
+    color: #eef6ff !important;
+    border-color: rgba(193, 232, 255, .08) !important;
+}
+
+/* Status borders */
+body.dark-mode .card.border-success,
+body.dark-mode .card.border-warning,
+body.dark-mode .card.border-danger {
+    border-width: 1px !important;
+}
+
+/* Buttons special */
+body.dark-mode .btn-outline-warning.text-dark {
+    color: #ffe58a !important;
+    border-color: #ffd86b !important;
+    background: transparent !important;
+}
+
+body.dark-mode .btn-outline-warning.text-dark:hover {
+    background: #ffd86b !important;
+    color: #111 !important;
+}
+
+body.dark-mode .btn-success {
+    border: none !important;
+    box-shadow: 0 10px 20px rgba(25, 135, 84, .22);
+}
+
+body.dark-mode label.btn-outline-light {
+    color: #c1e8ff !important;
+    border-color: rgba(193, 232, 255, .2) !important;
+    background: rgba(2, 16, 36, .2) !important;
+}
+
+body.dark-mode label.btn-outline-light:hover {
+    background: #5483b3 !important;
+    color: #ffffff !important;
+}
+
+/* HR */
+body.dark-mode hr {
+    border-color: rgba(193, 232, 255, .08) !important;
+    opacity: 1;
+}
+
+/* =========================
+   SCROLLBAR (OPTIONAL BEAUTY)
+========================= */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(125, 160, 202, .12);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(84, 131, 179, .45);
+    border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(84, 131, 179, .65);
+}
+
+body.dark-mode ::-webkit-scrollbar-track {
+    background: rgba(2, 16, 36, .4);
+}
+
+body.dark-mode ::-webkit-scrollbar-thumb {
+    background: rgba(84, 131, 179, .45);
+}
+
+body.dark-mode ::-webkit-scrollbar-thumb:hover {
+    background: rgba(193, 232, 255, .35);
+}
+.auth-popup {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.auth-popup.show {
+    display: flex;
+}
+
+.auth-box {
+    background: #fff;
+    padding: 30px;
+    border-radius: 16px;
+    text-align: center;
+}
+
+body.dark-mode .auth-box {
+    background: #1a1a1d;
+    color: #fff;
+}
