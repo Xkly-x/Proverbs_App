@@ -19,6 +19,15 @@ from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.http import HttpResponse
+from django.contrib.auth.models import User
+
+def create_admin(request):
+    if not User.objects.filter(username='admin').exists():
+        User.objects.create_superuser('admin', 'admin@mail.com', 'admin123')
+        return HttpResponse('Админ создан! Логин: admin, Пароль: admin123')
+    return HttpResponse('Админ уже существует')
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/login/', auth_views.LoginView.as_view(template_name='ProverbsApp/login.html'), name='login'),
