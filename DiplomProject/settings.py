@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'ProverbsApp.apps.ProverbsappConfig',
+    'ProverbsApp.apps.ProverbsappConfig'
 ]
 
 MIDDLEWARE = [
@@ -120,7 +120,7 @@ USE_TZ = True
 
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
+STATICFILES_DIRS = [BASE_DIR / 'Static']
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 LOGOUT_REDIRECT_URL = 'login'
