@@ -38,9 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'cloudinary_storage',
     'django.contrib.staticfiles',
     'ProverbsApp.apps.ProverbsappConfig',
-    'cloudinary_storage',
     'cloudinary'
 
 ]
