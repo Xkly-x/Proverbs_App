@@ -40,9 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'cloudinary_storage',
     'django.contrib.staticfiles',
+    'cloudinary',
     'ProverbsApp.apps.ProverbsappConfig',
-    'cloudinary'
-
 ]
 
 MIDDLEWARE = [
